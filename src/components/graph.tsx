@@ -15,14 +15,14 @@ import { Badge } from "@/components/ui/badge";
 cytoscape.use(dagre);
 cytoscape.use(fcose);
 
-interface NetworkNode {
+export interface NetworkNode {
   id: string;
   label: string;
   type?: string;
   data?: any;
 }
 
-interface NetworkEdge {
+export interface NetworkEdge {
   id: string;
   source: string;
   target: string;
@@ -33,12 +33,12 @@ interface NetworkEdge {
   data?: any;
 }
 
-interface NetworkData {
+export interface NetworkData {
   nodes: NetworkNode[];
   edges: NetworkEdge[];
 }
 
-interface GraphProps {
+export interface GraphProps {
   data: NetworkData;
   height?: string | number;
   layout?: "dagre" | "fcose" | "grid" | "circle" | "breadthfirst";

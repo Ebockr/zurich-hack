@@ -11,6 +11,7 @@ import { networkService, NetworkData, networkUtils } from "@/services/networkSer
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import GraphContainer from "@/components/graph-container";
 
 // Mock data - replace this with actual API call
 const generateMockNetworkData = (): NetworkData => {
@@ -539,14 +540,7 @@ const GraphPage: React.FC = () => {
       {/* Graph Visualization */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
-          <Graph 
-            data={networkData} 
-            height="700px" 
-            layout="dagre"
-            className="w-full"
-            showFraud={showFraud}
-            onEdgeSelect={handleEdgeSelect}
-          />
+          <GraphContainer />
         </div>
         
         {/* Transaction Details Panel */}
