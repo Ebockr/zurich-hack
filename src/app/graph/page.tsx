@@ -271,9 +271,9 @@ const GraphPage: React.FC = () => {
             <CardTitle className="text-sm font-medium">Total Nodes</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{networkData.nodes.length}</div>
+            <div className="text-2xl font-bold">203,769</div>
             <p className="text-xs text-muted-foreground">
-              Network entities
+              Total entities in the network
             </p>
           </CardContent>
         </Card>
@@ -284,7 +284,7 @@ const GraphPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-600">
-              {networkData.edges.filter((edge: any) => edge.type === 'p2p').length}
+              234,355
             </div>
             <p className="text-xs text-muted-foreground">
               Peer-to-peer transfers
@@ -298,7 +298,7 @@ const GraphPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
-              {networkData.edges.filter((edge: any) => edge.type === 'transaction').length}
+              282
             </div>
             <p className="text-xs text-muted-foreground">
               Merchant payments
@@ -312,10 +312,10 @@ const GraphPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">
-              {networkData.edges.filter((edge: any) => edge.isFraud).length}
+              12,414
             </div>
             <p className="text-xs text-muted-foreground">
-              Suspicious activity
+              Suspicious activities
             </p>
           </CardContent>
         </Card>
@@ -326,10 +326,10 @@ const GraphPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600">
-              {networkData.edges.filter((edge: any) => edge.id.startsWith('gather-') && edge.isFraud).length}
+              203
             </div>
             <p className="text-xs text-muted-foreground">
-              Money collection bots
+              Accounts with High Inflow
             </p>
           </CardContent>
         </Card>
@@ -340,10 +340,10 @@ const GraphPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-600">
-              {networkData.edges.filter((edge: any) => edge.id.startsWith('scatter-') && edge.isFraud).length}
+              203
             </div>
             <p className="text-xs text-muted-foreground">
-              Money distribution bots
+              Accounts with High Outflow
             </p>
           </CardContent>
         </Card>
@@ -363,16 +363,13 @@ const GraphPage: React.FC = () => {
               <div className="flex justify-between">
                 <span className="text-sm">Active Collectors:</span>
                 <Badge variant="destructive">
-                  {new Set(networkData.edges.filter((edge: any) => edge.id.startsWith('gather-') && edge.isFraud).map((edge: any) => edge.target)).size}
+                  203
                 </Badge>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Total Volume:</span>
                 <Badge variant="outline">
-                  ${networkData.edges
-                    .filter((edge: any) => edge.id.startsWith('gather-') && edge.isFraud)
-                    .reduce((sum, edge: any) => sum + parseFloat(edge.label.replace(/[$,]/g, '')), 0)
-                    .toLocaleString()}
+                  29523.59 BTC
                 </Badge>
               </div>
             </div>
@@ -391,16 +388,13 @@ const GraphPage: React.FC = () => {
               <div className="flex justify-between">
                 <span className="text-sm">Active Distributors:</span>
                 <Badge variant="destructive">
-                  {new Set(networkData.edges.filter((edge: any) => edge.id.startsWith('scatter-') && edge.isFraud).map((edge: any) => edge.source)).size}
+                  203
                 </Badge>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Total Volume:</span>
                 <Badge variant="outline">
-                  ${networkData.edges
-                    .filter((edge: any) => edge.id.startsWith('scatter-') && edge.isFraud)
-                    .reduce((sum, edge: any) => sum + parseFloat(edge.label.replace(/[$,]/g, '')), 0)
-                    .toLocaleString()}
+                  51454.01 BTC
                 </Badge>
               </div>
             </div>
@@ -412,16 +406,10 @@ const GraphPage: React.FC = () => {
             <CardTitle className="text-sm font-medium">Network Density</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{(density * 100).toFixed(1)}%</div>
+            <div className="text-2xl font-bold">0.0013%</div>
             <p className="text-xs text-muted-foreground">
               Connection ratio
             </p>
-            <div className="mt-3 pt-3 border-t">
-              <div className="flex justify-between text-sm">
-                <span>P2P Ratio:</span>
-                <span>{((networkData.edges.filter((edge: any) => edge.type === 'p2p').length / networkData.edges.length) * 100).toFixed(1)}%</span>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>
@@ -470,25 +458,19 @@ const GraphPage: React.FC = () => {
               <div className="flex justify-between">
                 <span className="text-sm">Total P2P Volume:</span>
                 <span className="text-sm font-semibold text-blue-600">
-                  ${networkData.edges
-                    .filter((edge: any) => edge.type === 'p2p')
-                    .reduce((sum, edge: any) => sum + parseFloat(edge.label.replace(/[$,]/g, '')), 0)
-                    .toLocaleString()}
+                  586012.18 BTC
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Fraudulent Volume:</span>
                 <span className="text-sm font-semibold text-red-600">
-                  ${networkData.edges
-                    .filter((edge: any) => edge.isFraud)
-                    .reduce((sum, edge: any) => sum + parseFloat(edge.label.replace(/[$,]/g, '')), 0)
-                    .toLocaleString()}
+                  51846.75 BTC
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Risk Level:</span>
+                <span className="text-sm">Average Risk Score:</span>
                 <Badge variant="destructive">
-                  {((networkData.edges.filter((edge: any) => edge.isFraud).length / networkData.edges.length) * 100).toFixed(1)}% High Risk
+                  17% High Risk
                 </Badge>
               </div>
             </div>

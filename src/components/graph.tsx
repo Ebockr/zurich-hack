@@ -163,69 +163,52 @@ const Graph: React.FC<GraphProps> = ({
       container: cyRef.current,
       elements,
       style: [
-        // User account nodes - Round/circular black nodes
+        // All transaction nodes - Small circles with risk-based colors (matching matplotlib style)
         {
-          selector: "node[type='user']",
+          selector: "node",
           style: {
-            "background-color": "#000000",
-            "border-color": "#444444",
-            "border-width": 2,
-            "width": 60,
-            "height": 60,
+            "background-color": "#87ceeb", // Light blue for safe (default)
+            "border-color": "#87ceeb",
+            "border-width": 0,
+            "width": 8,
+            "height": 8,
             "shape": "ellipse",
-            "label": "data(label)",
+            "label": "", // No labels to match matplotlib clean appearance
             "text-valign": "center",
             "text-halign": "center",
             "color": "#ffffff",
-            "font-size": 11,
+            "font-size": 0,
             "text-outline-color": "#000000",
-            "text-outline-width": 1,
-            "text-wrap": "wrap",
-            "text-max-width": "70px",
+            "text-outline-width": 0,
+            "text-wrap": "none",
+            "text-max-width": "0px",
           },
         },
         
-        // Merchant nodes - Rectangular black nodes
+        // High risk nodes - Red
         {
-          selector: "node[type='merchant']",
+          selector: "node[data.risk_level='High']",
           style: {
-            "background-color": "#000000",
-            "border-color": "#555555",
-            "border-width": 2,
-            "width": 80,
-            "height": 50,
-            "shape": "rectangle",
-            "label": "data(label)",
-            "text-valign": "center",
-            "text-halign": "center",
-            "color": "#ffffff",
-            "font-size": 12,
-            "text-outline-color": "#000000",
-            "text-outline-width": 1,
-            "text-wrap": "wrap",
-            "text-max-width": "75px",
+            "background-color": "#ff0000",
+            "border-color": "#ff0000",
           },
         },
         
-        // Default fallback for any other nodes
+        // Medium risk nodes - Orange
         {
-          selector: "node:not([type])",
+          selector: "node[data.risk_level='Medium']",
           style: {
-            "background-color": "#000000",
-            "border-color": "#333333",
-            "border-width": 2,
-            "width": 60,
-            "height": 60,
-            "shape": "ellipse",
-            "label": "data(label)",
-            "text-valign": "center",
-            "text-halign": "center",
-            "color": "#ffffff",
-            "font-size": 11,
-            "text-outline-color": "#000000",
-            "text-outline-width": 1,
-            "text-wrap": "wrap",
-            "text-max-width": "70px",
+            "background-color": "#ffa500",
+            "border-color": "#ffa500",
+          },
+        },
+        
+        // Low risk nodes - Yellow
+        {
+          selector: "node[data.risk_level='Low']",
+          style: {
+            "background-color": "#ffff00",
+            "border-color": "#ffff00",
           },
         },
         
@@ -249,63 +232,39 @@ const Graph: React.FC<GraphProps> = ({
           },
         },
         
-        // All edges - gray by default
+        // All edges - thin light gray lines (matching matplotlib style)
         {
           selector: "edge",
           style: {
-            "width": 2,
-            "line-color": "#6b7280",
-            "target-arrow-color": "#6b7280",
-            "target-arrow-shape": "triangle",
-            "arrow-scale": 1.0,
-            "curve-style": "bezier",
-            "label": "data(label)",
-            "font-size": 10,
-            "color": "#374151",
+            "width": 0.5,
+            "line-color": "#d3d3d3",
+            "target-arrow-color": "#d3d3d3",
+            "target-arrow-shape": "none",
+            "arrow-scale": 0,
+            "curve-style": "straight",
+            "label": "",
+            "font-size": 0,
+            "color": "#d3d3d3",
             "text-rotation": "autorotate",
-            "text-margin-y": -10,
-            "text-background-color": "#ffffff",
-            "text-background-opacity": 0.9,
-            "text-background-padding": "3px",
-            "text-border-color": "#d1d5db",
-            "text-border-width": 1,
-            "opacity": 0.7,
+            "text-margin-y": 0,
+            "text-background-color": "transparent",
+            "text-background-opacity": 0,
+            "text-background-padding": "0px",
+            "text-border-color": "transparent",
+            "text-border-width": 0,
+            "opacity": 0.8,
           },
         },
         
-        // Fraud edges - only red when showFraud is enabled  
+        // Fraud edges - red when showFraud is enabled (matching matplotlib style)
         ...(showFraud ? [{
           selector: "edge.fraud-edge",
           style: {
-            "line-color": "#ef4444",
-            "target-arrow-color": "#ef4444", 
-            "width": 3,
+            "line-color": "#ff0000",
+            "target-arrow-color": "#ff0000", 
+            "width": 0.8,
             "opacity": 1,
-            "color": "#dc2626",
-          },
-        }] : []),
-        
-        // Gather fraud - extra emphasis (only fraudulent gather edges)
-        ...(showFraud ? [{
-          selector: "edge.fraud-edge[id *= 'gather-']",
-          style: {
-            "line-color": "#dc2626",
-            "target-arrow-color": "#dc2626",
-            "width": 4,
-            "opacity": 1,
-            "arrow-scale": 1.3,
-          },
-        }] : []),
-        
-        // Scatter fraud - extra emphasis (only fraudulent scatter edges)
-        ...(showFraud ? [{
-          selector: "edge.fraud-edge[id *= 'scatter-']",
-          style: {
-            "line-color": "#b91c1c", 
-            "target-arrow-color": "#b91c1c",
-            "width": 4,
-            "opacity": 1,
-            "arrow-scale": 1.3,
+            "color": "#ff0000",
           },
         }] : []),
 

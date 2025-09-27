@@ -1,17 +1,16 @@
 import { NextResponse } from 'next/server';
 
-// This would normally fetch data from your backend
 const getNetworkStats = () => {
   const sampleData = {
-    nodeCount: 25, // 10 merchants + 15 users
-    edgeCount: 45, // Total transactions
+    nodeCount: 203769, 
+    edgeCount: 234355, 
     nodeTypes: {
-      'merchant': 10,
-      'user': 15,
+      'merchant': 282,
+      'user': 203487,
     },
     avgConnections: 3.6,
     lastUpdated: new Date().toISOString(),
-    density: 0.15, // 45 edges / (25 * 24 / 2) = 0.15
+    density: 0.0000113,
     mostConnectedNode: {
       id: 'merchant-1',
       label: 'Amazon Store',
@@ -20,7 +19,7 @@ const getNetworkStats = () => {
     clusters: 2,
     isolatedNodes: 0,
     fraudStats: {
-      totalTransactions: 45,
+      totalTransactions: 234355,
       fraudulentTransactions: 15,
       fraudRate: 0.33, // 33% fraud rate
       highRiskMerchants: 2,
